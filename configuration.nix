@@ -49,18 +49,26 @@
   # Enable VMware guest tools
   virtualisation.vmware.guest.enable = true;
 
+  # Enable hyprland
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    # Hint to electron apps to use Wayland
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  };
+
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
+  # services.xserver = {
+  #   layout = "us";
+  #   xkbVariant = "";
+  # };
 
   # Enable CUPS to print documents.
     # services.printing.enable = true;
