@@ -48,13 +48,13 @@
     transmission    
   ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-
-    settings = {
-      #TODO
-    };
-  };
+  ## Hyprland config
+  # wayland.windowManager.hyprland = {
+  #   enable = true;
+  #   settings = {
+  #     #TODO
+  #   };
+  # };
 
   programs.zsh = {
     enable = true;
