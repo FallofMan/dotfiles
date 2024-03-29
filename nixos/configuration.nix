@@ -23,6 +23,11 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+
+    #wayland
+  	./wayland/general.nix
+	  ./wayland/window-manager.nix
+  	./wayland/login-manager.nix
   ];
 
   nixpkgs = {
@@ -99,45 +104,13 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
-
-  ## Enable hyprland
-  # programs.hyprland.enable = true;
-  # programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+
+  environment.sessionVariables = rec {
+    XDG_CONFIG_HOME = "\${HOME}/.config";
+    XCURSOR_SIZE = "24";
+  };
 
   users.users = {
     collin = {
@@ -145,7 +118,6 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYrYEPsjAfiQeVjEVdEBVvPyvFtd9t0nYkmSAFZohCQ"
       ];
-      
       extraGroups = ["networkmanager" "wheel"];
     };
   };
@@ -155,18 +127,9 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    alacritty
-    zsh
     gparted
     tmux
-    curl
-    man
     unzip
-    git
-    yazi
-    xclip
-    openvpn
-    gh
   ];
 
   # This setups a SSH server. Very important if you're setting up a headless system.

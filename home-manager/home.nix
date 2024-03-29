@@ -8,6 +8,16 @@
   pkgs,
   ...
 }: {
+  imports = [
+    #Git
+    ./config/git.nix
+
+    #zsh
+    ./config/zsh.nix
+
+    #Waybar
+    ./config/waybar.nix
+  ];
 
   nixpkgs = {
     # You can add overlays here
@@ -40,48 +50,34 @@
   };
 
   home.packages = with pkgs; [
+    #Text editor
+    vscodium
+    gh #Github integration
+
+    #Browser
     firefox
-    kate
-    # reaper
-    # spotify
-    # sublime
-    transmission    
+    chromium
+    qutebrowser
+
+    #image viewer
+    imv
+
+    #Color palette
+    eyedropper
+
+    #App launcher
+    bemenu
+
+    #File browser
+    xfce.thunar
+
+    #Font
+    jetbrains-mono
+    nerdfonts  
   ];
 
-  ## Hyprland config
-  # wayland.windowManager.hyprland = {
-  #   enable = true;
-  #   settings = {
-  #     #TODO
-  #   };
-  # };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    syntaxHighlighting.enable = true;    
-
-    shellAliases = {
-      ll = "ls -l";
-    };
-    history.size = 10000;
-
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "git"
-        "pip"
-        "tmux"
-        "rust"
-      ];
-      theme = "af-magic";
-    };
-  };
-
-  # Enable home-manager and git
+  # Enable home-manager
   programs.home-manager.enable = true;
-  programs.git.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
